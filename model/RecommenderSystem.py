@@ -15,3 +15,4 @@ class RecommenderSystem(nn.Module):
         else:
             item_embeddings = self.item_model(self.all_items)
         return torch.matmul(user_embeddings, torch.transpose(item_embeddings))
+        

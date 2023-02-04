@@ -8,7 +8,7 @@ class RecommenderTowerModel(nn.Module):
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(embedding_dimension)
         self.relu2 = nn.ReLU()
-        
+
     def forward(self, inputs):
         x = self.embedding(inputs)
         x = self.fc(x)
@@ -16,3 +16,4 @@ class RecommenderTowerModel(nn.Module):
         x = self.fc2(x)
         x = self.relu2(x)
         return x
+        
