@@ -1,6 +1,6 @@
 from data.util import util
-from model.util import util
-from model import  RecommenderSystem
+from model import util as model_util
+from model import RecommenderSystem
 from model import RecommenderTowerModel
 
 def main():
