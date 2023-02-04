@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
-import Tower
+from model.RecommenderTowerModel import RecommenderTowerModel
 
-class Recommender(nn.Module):
-    def __init__(self, user_model: Tower, item_model: Tower):
-        super(Recommender).__init__()
+class RecommenderSystem(nn.Module):
+    def __init__(self, user_model: RecommenderTowerModel, item_model: RecommenderTowerModel):
+        super(RecommenderSystem).__init__()
         self.user_model = user_model
         self.item_model = item_model
        
