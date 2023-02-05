@@ -20,7 +20,8 @@ def train_step(recommender_system, user_train, item_train, epoch):
     optimizer.step()
     return {'loss': loss_value, 'epoch': epoch}
 
-def train_recommender_system(recommender_system, user_train, item_train, epochs=10):
+def train_recommender_system(recommender_system, dataloader, epochs=10):
+    # needs doing dont know about dataloader use
     loss_history = []
     for epoch in range(epochs):
         result = train_step(recommender_system, user_train, item_train, epoch)
