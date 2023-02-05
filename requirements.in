@@ -14,3 +14,4 @@ torch
 tqdm
 typing_extensions
 urllib3
+torchtext
