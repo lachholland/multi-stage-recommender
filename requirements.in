@@ -1,0 +1,17 @@
+certifi
+charset-normalizer
+idna
+kaggle
+numpy
+pandas
+python-dateutil
+python-slugify
+pytz
+requests
+six
+text-unidecode
+torch
+tqdm
+typing_extensions
+urllib3
+torchtext
