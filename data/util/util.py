@@ -2,6 +2,7 @@ import torch
 import kaggle
 import os
 from torchtext.vocab import build_vocab_from_iterator
+import torchtext
 import pandas as pd
 
 def data_init():
