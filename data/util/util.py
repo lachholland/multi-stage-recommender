@@ -4,6 +4,7 @@ import os
 from torchtext.vocab import build_vocab_from_iterator
 import torchtext
 import pandas as pd
+from datasets import CustomDataset
 
 def split_data(data, train_decimal=0.6, val_decimal=0.2):
     train_size = int(train_decimal * len(data))
@@ -29,3 +30,13 @@ def customer_lookup(train_df:pd.DataFrame):
 def yield_tokens(unique_ids):
     for id in unique_ids:
         yield id
+
+def dataset_init():
+    articles_data = pd.read_csv('data/articles.csv')
+    customers_data = pd.read_csv('data/customers.csv')
+    transactions_train_data = pd.read_csv('data/transactions_train.csv')
+    pd.read_csv('data/transactions_train.csv')
+    dataset = CustomDataset(articles_data, customers_data, transactions_train_data)
+    dataloader = torch.utils.data.Dataloader(dataset, batch_size=2, shuffle=True)
+    return dataloader
+

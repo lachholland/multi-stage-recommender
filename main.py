@@ -5,11 +5,11 @@ from model import RecommenderSystem
 from model import RecommenderTowerModel
 
 def main():
-    dataloader = data_util.init_dateset()
+    dataloader = data_util.dataset_init()
     item_model = RecommenderTowerModel()
     user_model = RecommenderTowerModel()
     recommender_system = RecommenderSystem(user_model, item_model)
-    data_util.train_recommender_system(recommender_system, epochs=10)
+    model_util.train_recommender_system(recommender_system, dataloader, epochs=10)
 
 if __name__ == '__main__':
     main()
