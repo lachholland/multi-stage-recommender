@@ -36,7 +36,9 @@ def dataset_init():
     customers_data = pd.read_csv('data/customers.csv')
     transactions_train_data = pd.read_csv('data/transactions_train.csv')
     pd.read_csv('data/transactions_train.csv')
-    dataset = CustomDataset(articles_data, customers_data, transactions_train_data)
+    transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
+    target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
+    dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
     dataloader = torch.utils.data.Dataloader(dataset, batch_size=2, shuffle=True)
     return dataloader
 
