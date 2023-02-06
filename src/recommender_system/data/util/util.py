@@ -1,7 +1,8 @@
 import torch
+from torch.utils.data import DataLoader
 from torchtext.vocab import build_vocab_from_iterator
 import pandas as pd
-from datasets import CustomDataset
+from data.datasets import CustomDataset
 
 def split_data(data, train_decimal=0.6, val_decimal=0.2):
     train_size = int(train_decimal * len(data))
@@ -28,12 +29,21 @@ def yield_tokens(unique_ids):
     for id in unique_ids:
         yield id
 
-def dataset_init():
+def get_train_dataset():
     transactions_train_data = pd.read_csv('data/transactions_train.csv')
     pd.read_csv('data/transactions_train.csv')
     transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
     target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
     dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
     dataloader = torch.utils.data.Dataloader(dataset, batch_size=2, shuffle=True)
+    return dataloader
+
+def get_test_dataset():
+    transactions_train_data = pd.read_csv('data/transactions_train.csv')
+    pd.read_csv('data/transactions_train.csv')
+    transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
+    target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
+    dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
+    dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
     return dataloader
 

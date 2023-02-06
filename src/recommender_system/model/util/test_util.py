@@ -1,6 +1,7 @@
 import torch.nn as nn
 from data import util as data_util
 from model import RecommenderSystem
+from data import util as data_util
 
 def test_step(recommender_system, user_train, item_train, epoch):
     logits = recommender_system(user_train, item_train)
@@ -15,5 +16,5 @@ def test_recommender_system(recommender_system, dataloader):
             loss_history.append(result)
 
 def test_start(model: RecommenderSystem):
-    test_data_loader = data_util.dataset_init()
-    test_recommender_system(model, test_data_loader) 
+    test_data_loader = data_util.get_test_data()
+    test_recommender_system(model, test_data_loader)
