@@ -1,8 +1,5 @@
 import torch
-import kaggle
-import os
 from torchtext.vocab import build_vocab_from_iterator
-import torchtext
 import pandas as pd
 from datasets import CustomDataset
 
@@ -32,8 +29,6 @@ def yield_tokens(unique_ids):
         yield id
 
 def dataset_init():
-    articles_data = pd.read_csv('data/articles.csv')
-    customers_data = pd.read_csv('data/customers.csv')
     transactions_train_data = pd.read_csv('data/transactions_train.csv')
     pd.read_csv('data/transactions_train.csv')
     transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
