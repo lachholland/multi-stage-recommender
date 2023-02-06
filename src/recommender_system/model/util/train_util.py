@@ -1,8 +1,5 @@
 import torch
 import torch.nn as nn
-from data import util as data_util
-from model import RecommenderSystem
-from model import RecommenderTowerModel
 
 def train_step(recommender_system, user_train, item_train, epoch):
     logits = recommender_system(user_train, item_train)
@@ -22,10 +19,3 @@ def train_recommender_system(recommender_system, dataloader, epochs=10):
             loss_history.append(result)
             result = train_step(recommender_system, inputs, labels)
             loss_history.append(result)
-
-def train_start():
-    train_data_loader = data_util.dataset_init()
-    item_model = RecommenderTowerModel()
-    user_model = RecommenderTowerModel()
-    recommender_system = RecommenderSystem(user_model, item_model)
-    train_recommender_system(recommender_system, train_data_loader, epochs=10)
