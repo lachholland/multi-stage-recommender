@@ -21,7 +21,7 @@ def article_lookup(train_df:pd.DataFrame):
     return vocab
 
 def customer_lookup(train_df:pd.DataFrame):
-    unique_customer_ids=train_df.article_id.unique() # list of unique customer_ids found in training dataset
+    unique_customer_ids=train_df.customer_id.unique() # list of unique customer_ids found in training dataset
     vocab=build_vocab_from_iterator(yield_tokens(unique_customer_ids), specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     customer_vocab_size=len(unique_customer_ids)+1
     print(f'article vocab size = {customer_vocab_size}')
