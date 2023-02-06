@@ -21,7 +21,7 @@ def article_lookup(train_df:pd.DataFrame):
     return vocab
 
 def customer_lookup(train_df:pd.DataFrame):
-    unique_customer_ids=train_df.article_id.unique() # list of unique customer_ids found in training dataset
+    unique_customer_ids=train_df.customer_id.unique() # list of unique customer_ids found in training dataset
     vocab=build_vocab_from_iterator(yield_tokens(unique_customer_ids), specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     customer_vocab_size=len(unique_customer_ids)+1
     print(f'article vocab size = {customer_vocab_size}')
@@ -36,7 +36,9 @@ def dataset_init():
     customers_data = pd.read_csv('data/customers.csv')
     transactions_train_data = pd.read_csv('data/transactions_train.csv')
     pd.read_csv('data/transactions_train.csv')
-    dataset = CustomDataset(articles_data, customers_data, transactions_train_data)
+    transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
+    target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
+    dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
     dataloader = torch.utils.data.Dataloader(dataset, batch_size=2, shuffle=True)
     return dataloader
 
