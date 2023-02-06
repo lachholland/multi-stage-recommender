@@ -2,14 +2,24 @@ import torch
 from torchtext.vocab import build_vocab_from_iterator
 import pandas as pd
 import os
+from recommender_system.data.datasets import CustomDataset
 
-def init_data(train_decimal=0.6, val_decimal=0.2): 
+def split_data(train_decimal=0.6, val_decimal=0.2): 
     data = pd.read_csv(os.path.join(os.getcwd(), 'data', 'data_files', 'transactions.csv')) 
     train_size = int(train_decimal * len(data))
     val_size = int(val_decimal * len(data))
     test_size = len(data) - train_size - val_size 
     train_data, val_data, test_data = torch.utils.data.random_split(data, [train_size, val_size, test_size])
     return train_data, val_data, test_data
+
+def dataset_init(transactions_train_data):
+    transactions_train_data = pd.read_csv('data/transactions_train.csv')
+    pd.read_csv('data/transactions_train.csv')
+    transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
+    target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
+    dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
+    dataloader = torch.utils.data.Dataloader(dataset, batch_size=2, shuffle=True)
+    return dataloader   
 
 def article_lookup(train_df:pd.DataFrame):
     unique_article_ids=train_df.article_id.unique() # list of unique article_ids found in training dataset
