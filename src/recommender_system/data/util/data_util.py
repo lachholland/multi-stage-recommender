@@ -2,7 +2,7 @@ import torch
 from torchtext.vocab import build_vocab_from_iterator
 import pandas as pd
 import os
-from ..datasets.CustomDataset import CustomDataset
+from ..datasets import CustomDataset
 import numpy as np
 from torch.utils.data.sampler import SubsetRandomSampler
 
@@ -21,8 +21,6 @@ def CustomDatasetCreator(transactions_train_data):
     target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
     dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
     return dataset
-
-
 
 def article_lookup(train_df:pd.DataFrame):
     unique_article_ids=train_df.article_id.unique() # list of unique article_ids found in training dataset

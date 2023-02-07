@@ -7,7 +7,7 @@ from recommender_system.data.datasets import CustomDataset
 import pandas as pd
 
 def main():
-    transactions_train_data=pd.read_csv(r'.\recommender_system\data\transactions_train.csv')
+    transactions_train_data=pd.read_csv('./recommender_system/data/data_files/transactions_training.csv')
     item_model = RecommenderTowerModel.RecommenderTowerModel()
     user_model = RecommenderTowerModel.RecommenderTowerModel()
     recommender_system = RecommenderSystem.RecommenderSystem(user_model, item_model)

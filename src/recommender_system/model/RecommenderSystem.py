@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from model.RecommenderTowerModel import RecommenderTowerModel
+from . import RecommenderTowerModel
 
 class RecommenderSystem(nn.Module):
     def __init__(self, user_model: RecommenderTowerModel, item_model: RecommenderTowerModel):
