@@ -17,9 +17,9 @@ def split_data(train_decimal=0.6, val_decimal=0.2):
 def CustomDatasetCreator(transactions_train_data):
     transactions_train_dat = pd.read_csv(r'C:\Users\navpa\recommender_system\multi_stage_recommender.git\data\transactions_train.csv')
     #pd.read_csv('data/transactions_train.csv')
-    transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
-    target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
-    dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
+    transform=lambda x:customer_lookup(transactions_train_dat).__getitem__(x)
+    target_transform=lambda y:article_lookup(transactions_train_dat).__getitem__(y)
+    dataset = CustomDataset(transactions_train_dat,transform=transform,target_transform=target_transform)
     return dataset
 
 
