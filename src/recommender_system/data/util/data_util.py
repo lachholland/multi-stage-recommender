@@ -17,10 +17,10 @@ def split_data(train_decimal=0.6, val_decimal=0.2):
 def CustomDatasetCreator(transactions_train_data):
     transactions_train_dat = pd.read_csv(r'C:\Users\navpa\recommender_system\multi_stage_recommender.git\data\transactions_train.csv')
     #pd.read_csv('data/transactions_train.csv')
-    transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
-    target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
+    transform=lambda x:customer_lookup(transactions_train_data)[0].__getitem__(x)
+    target_transform=lambda y:article_lookup(transactions_train_data)[0].__getitem__(y)
     dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
-    return dataset
+    return dataset,article_lookup(transactions_train_data)[1],customer_lookup(transactions_train_data)[1]
 
 
 
@@ -29,14 +29,14 @@ def article_lookup(train_df:pd.DataFrame):
     vocab=build_vocab_from_iterator(yield_tokens(unique_article_ids), specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     article_vocab_size=len(unique_article_ids)+1
     print(f'article vocab size = {article_vocab_size}')
-    return vocab
+    return [vocab,article_vocab_size]
 
 def customer_lookup(train_df:pd.DataFrame):
     unique_customer_ids=train_df.customer_id.unique() # list of unique customer_ids found in training dataset
     vocab=build_vocab_from_iterator(yield_tokens(unique_customer_ids), specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     customer_vocab_size=len(unique_customer_ids)+1
     print(f'article vocab size = {customer_vocab_size}')
-    return vocab
+    return [vocab,customer_vocab_size]
 
 def yield_tokens(unique_ids):
     for id in unique_ids:

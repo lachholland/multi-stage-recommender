@@ -7,9 +7,10 @@ from recommender_system.data.datasets import CustomDataset
 import pandas as pd
 
 def main():
+    complete_customdataset,item_vocab_size,user_vocab_size = data_util.CustomDatasetCreator(transactions_train_data)
     transactions_train_data=pd.read_csv(r'.\recommender_system\data\transactions_train.csv')
-    item_model = RecommenderTowerModel.RecommenderTowerModel()
-    user_model = RecommenderTowerModel.RecommenderTowerModel()
+    item_model = RecommenderTowerModel.RecommenderTowerModel(vocab_size=item_vocab_size,embedding_dimension=10)
+    user_model = RecommenderTowerModel.RecommenderTowerModel(vocab_size=user_vocab_size,embedding_dimension=10)
     recommender_system = RecommenderSystem.RecommenderSystem(user_model, item_model)
     complete_customdataset = data_util.CustomDatasetCreator(transactions_train_data)
     train_data_loader,validation_loader=data_util.DataLoaderCreator(complete_customdataset,batch_size=64,splits=0.2)
