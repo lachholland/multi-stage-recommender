@@ -63,7 +63,7 @@ def DataLoaderCreator(dataset,batch_size,splits,shuffle_dataset=True,random_seed
                                                 sampler=valid_sampler)
     return train_loader,validation_loader
 
-#here is testing
+#testing here
 
 train_df=pd.read_csv(r"C:\Users\navpa\recommender_system\multi_stage_recommender.git\src\recommender_system\data\transactions_train.csv")
 testing_df=train_df.head(5)
@@ -71,7 +71,7 @@ print(testing_df)
 print(len(CustomDatasetCreator(testing_df)[0]))
 train_loader,validation_loader=DataLoaderCreator(CustomDatasetCreator(testing_df)[0],64,0.2)
 train_features, train_labels = next(iter(train_loader))
-for i in range(len(CustomDatasetCreator(testing_df)[0])):
-    print(CustomDatasetCreator(testing_df)[0].__getitem__(i))
+for i in range(len(train_features)):
+    print(train_features[i],train_labels[i])
 print(article_lookup(testing_df)[0].get_stoi())
 print(customer_lookup(testing_df)[0].get_stoi())
