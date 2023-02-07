@@ -2,7 +2,7 @@ import torch
 from torchtext.vocab import build_vocab_from_iterator
 import pandas as pd
 import os
-from recommender_system.data.datasets import CustomDataset
+from ..datasets.CustomDataset import CustomDataset
 import numpy as np
 from torch.utils.data.sampler import SubsetRandomSampler
 
@@ -15,8 +15,8 @@ def split_data(train_decimal=0.6, val_decimal=0.2):
     return train_data, val_data, test_data
 
 def CustomDatasetCreator(transactions_train_data):
-    transactions_train_data = pd.read_csv('data/transactions_train.csv')
-    pd.read_csv('data/transactions_train.csv')
+    transactions_train_dat = pd.read_csv(r'C:\Users\navpa\recommender_system\multi_stage_recommender.git\data\transactions_train.csv')
+    #pd.read_csv('data/transactions_train.csv')
     transform=lambda x:customer_lookup(transactions_train_data).__getitem__(x)
     target_transform=lambda y:article_lookup(transactions_train_data).__getitem__(y)
     dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
@@ -58,3 +58,6 @@ def DataLoaderCreator(dataset,batch_size,splits,shuffle_dataset=True,random_seed
     validation_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
                                                 sampler=valid_sampler)
     return train_loader,validation_loader
+
+#train_loader,validation_loader=DataLoaderCreator(CustomDatasetCreator(pd.read_csv(r"C:\Users\navpa\recommender_system\multi_stage_recommender.git\data\transactions_train.csv")),64,0.2)
+#print(len(train_loader))
