@@ -18,29 +18,32 @@ def CustomDatasetCreator(transactions_train_data):
     transactions_train_dat = pd.read_csv(r'C:\Users\navpa\recommender_system\multi_stage_recommender.git\data\transactions_train.csv')
     #pd.read_csv('data/transactions_train.csv')
     transform=lambda x:customer_lookup(transactions_train_data)[0].__getitem__(x)
-    target_transform=lambda y:article_lookup(transactions_train_data)[0].__getitem__(y)
+    target_transform=lambda y:article_lookup(transactions_train_data)[0].__getitem__(str(y))
     dataset = CustomDataset(transactions_train_data,transform=transform,target_transform=target_transform)
-    return dataset,article_lookup(transactions_train_data)[1],customer_lookup(transactions_train_data)[1]
-
+    article_vocab_size=article_lookup(transactions_train_data)[1]
+    customer_vocab_size=customer_lookup(transactions_train_data)[1]
+    return [dataset,article_vocab_size,customer_vocab_size]
 
 
 def article_lookup(train_df:pd.DataFrame):
     unique_article_ids=train_df.article_id.unique() # list of unique article_ids found in training dataset
-    vocab=build_vocab_from_iterator(yield_tokens(unique_article_ids), specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
+    vocab=build_vocab_from_iterator([yield_tokens(unique_article_ids)], specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     article_vocab_size=len(unique_article_ids)+1
     print(f'article vocab size = {article_vocab_size}')
     return [vocab,article_vocab_size]
 
 def customer_lookup(train_df:pd.DataFrame):
     unique_customer_ids=train_df.customer_id.unique() # list of unique customer_ids found in training dataset
-    vocab=build_vocab_from_iterator(yield_tokens(unique_customer_ids), specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
+    #print(unique_customer_ids)
+    vocab=build_vocab_from_iterator([yield_tokens(unique_customer_ids)], specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     customer_vocab_size=len(unique_customer_ids)+1
-    print(f'article vocab size = {customer_vocab_size}')
+    print(f'customer vocab size = {customer_vocab_size}')
     return [vocab,customer_vocab_size]
 
 def yield_tokens(unique_ids):
     for id in unique_ids:
-        yield id
+        #print(type(str(id)))
+        yield str(id)
 
 def DataLoaderCreator(dataset,batch_size,splits,shuffle_dataset=True,random_seed=42):
     dataset_size = len(dataset)
@@ -52,6 +55,7 @@ def DataLoaderCreator(dataset,batch_size,splits,shuffle_dataset=True,random_seed
     train_indices = indices[split:]
     val_indices=indices[:split]
     train_sampler = SubsetRandomSampler(train_indices)
+
     valid_sampler = SubsetRandomSampler(val_indices)
     train_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, 
                                            sampler=train_sampler)
@@ -59,5 +63,15 @@ def DataLoaderCreator(dataset,batch_size,splits,shuffle_dataset=True,random_seed
                                                 sampler=valid_sampler)
     return train_loader,validation_loader
 
-#train_loader,validation_loader=DataLoaderCreator(CustomDatasetCreator(pd.read_csv(r"C:\Users\navpa\recommender_system\multi_stage_recommender.git\data\transactions_train.csv")),64,0.2)
-#print(len(train_loader))
+#here is testing
+
+train_df=pd.read_csv(r"C:\Users\navpa\recommender_system\multi_stage_recommender.git\src\recommender_system\data\transactions_train.csv")
+testing_df=train_df.head(5)
+print(testing_df)
+print(len(CustomDatasetCreator(testing_df)[0]))
+train_loader,validation_loader=DataLoaderCreator(CustomDatasetCreator(testing_df)[0],64,0.2)
+train_features, train_labels = next(iter(train_loader))
+for i in range(len(CustomDatasetCreator(testing_df)[0])):
+    print(CustomDatasetCreator(testing_df)[0].__getitem__(i))
+print(article_lookup(testing_df)[0].get_stoi())
+print(customer_lookup(testing_df)[0].get_stoi())
