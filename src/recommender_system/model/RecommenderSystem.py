@@ -4,15 +4,15 @@ from .RecommenderTowerModel import RecommenderTowerModel
 
 class RecommenderSystem(nn.Module):
     def __init__(self, user_model: RecommenderTowerModel, item_model: RecommenderTowerModel):
-        super(RecommenderSystem).__init__()
+        super(RecommenderSystem,self).__init__()
         self.user_model = user_model
         self.item_model = item_model
        
     def forward(self, user_inputs, item_inputs):
-        user_embeddings = self.user_model(user_inputs['user_id'])
+        user_embeddings = self.user_model(user_inputs)
         if self.training:
-            item_embeddings = self.item_model(item_inputs['item_id'])
+            item_embeddings = self.item_model(item_inputs)
         else:
             item_embeddings = self.item_model(self.all_items)
-        return torch.matmul(user_embeddings, torch.transpose(item_embeddings))
+        return torch.matmul(user_embeddings, torch.transpose(item_embeddings,0,1))
         
