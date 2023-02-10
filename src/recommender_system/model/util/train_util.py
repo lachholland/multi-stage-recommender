@@ -31,15 +31,45 @@ def train_recommender_system(recommender_system, train_dataloader,val_dataloader
             result = train_step(recommender_system, inputs, labels, epoch)
             loss_history.append(result)
             running_loss += result['loss'].item()
-            if i % 20 == 19:    
+            if i % 200 == 199:    
                 
                 # print every 2000 mini-batches
-                print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
+                #print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
                 running_loss = 0.0
         print(loss_history)
         loss_history=[]
+
+
+        with torch.no_grad(): 
+            recommender_system.eval() 
+            for data in val_dataloader: 
+               inputs, outputs = data 
+               predicted_outputs = recommender_system(inputs,outputs)
+               print(mapping_labels(outputs)) 
+               val_loss = criterion(predicted_outputs, mapping_labels(outputs) )
+               print(val_loss)
+             
+             # The label with the highest value will be our prediction 
+               _, predicted = torch.max(predicted_outputs, 1)
+               #print(predicted_outputs) 
+               running_val_loss += val_loss.item()  
+               total += outputs.size(0) 
+               running_accuracy += (predicted == (mapping_labels(outputs))).sum().item()
+        # Calculate validation loss value 
+        val_loss_value = running_val_loss/len(val_dataloader) 
+                
+        # Calculate accuracy as the number of correct predictions in the validation batch divided by the total number of predictions done.  
+        accuracy = (100 * running_accuracy / total)
+        print(accuracy)
+
+        # Save the model if the accuracy is the best 
+        #if accuracy > best_accuracy: 
+         #   saveModel() 
+          #  best_accuracy = accuracy 
+    #print(loss_history)
         #result = train_step(recommender_system, inputs, labels)
         #loss_history.append(result
+        break
 
 
 """

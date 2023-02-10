@@ -9,7 +9,7 @@ import pandas as pd
 def main():
     print(1)
     transactions_train_data=pd.read_csv(r'.\recommender_system\data\transactions_train.csv')
-    testing_df=transactions_train_data.head(100)
+    testing_df=transactions_train_data.head(100000)
     creator_output=data_util.CustomDatasetCreator(testing_df)
     complete_customdataset = creator_output[0]
     item_vocab_size=creator_output[1]
