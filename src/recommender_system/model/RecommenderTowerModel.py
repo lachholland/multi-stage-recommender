@@ -6,10 +6,10 @@ class RecommenderTowerModel(nn.Module):
         self.embedding = nn.Embedding(vocab_size, embedding_dimension)
         self.fc = nn.Linear(embedding_dimension,256)
         self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(256,128)
+        self.fc2 = nn.Linear(256,embedding_dimension)
         self.relu2 = nn.ReLU()
-        self.fc3=nn.Linear(128,embedding_dimension)
-        self.relu3=nn.ReLU()
+        #self.fc3=nn.Linear(128,embedding_dimension)
+        #self.relu3=nn.ReLU()
 
     def forward(self, inputs):
         x = self.embedding(inputs)
@@ -17,7 +17,7 @@ class RecommenderTowerModel(nn.Module):
         x = self.relu(x)
         x = self.fc2(x)
         x = self.relu2(x)
-        x = self.fc3(x)
-        x = self.relu3(x)
+        #x = self.fc3(x)
+        #x = self.relu3(x)
         return x
         
