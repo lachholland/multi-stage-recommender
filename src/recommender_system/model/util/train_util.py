@@ -10,7 +10,7 @@ def train_step(recommender_system, user_train, item_train, epoch):
     #print(mapped_labels)
     criterion = nn.CrossEntropyLoss()
     loss_value = criterion(logits, mapped_labels)
-    print(loss_value)
+    #print(loss_value)
     optimizer = torch.optim.Adam(recommender_system.parameters(), lr=0.0001)
     optimizer.zero_grad()
     loss_value.backward()
@@ -48,18 +48,22 @@ def train_recommender_system(recommender_system, train_dataloader,val_dataloader
             for data in val_dataloader: 
                inputs, outputs = data 
                predicted_outputs = recommender_system(inputs,outputs)
+               #if epoch>3:
+                   #print(predicted_outputs)
                #print(mapping_labels(outputs)) 
                val_loss = criterion(predicted_outputs, mapping_labels(outputs) )
                #print(val_loss)
              
              # The label with the highest value will be our prediction 
                _, predicted = torch.max(predicted_outputs, 1)
+               print(predicted.size())
                #print(predicted_outputs) 
                running_val_loss += val_loss.item()  
                total += outputs.size(0) 
                running_accuracy += (predicted == (mapping_labels(outputs))).sum().item()
         # Calculate validation loss value 
         val_loss_value = running_val_loss/len(val_dataloader) 
+        print(val_loss_value)
                 
         # Calculate accuracy as the number of correct predictions in the validation batch divided by the total number of predictions done.  
         accuracy = (100 * running_accuracy / total)
