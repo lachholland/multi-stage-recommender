@@ -18,4 +18,3 @@ class CustomDataset(Dataset):
         if self.target_transform:
             label=self.target_transform(label)  #transforms the y value if target_transformation exists
         return user,label
- 
