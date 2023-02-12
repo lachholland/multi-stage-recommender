@@ -46,12 +46,16 @@ def train_recommender_system(recommender_system, train_dataloader,val_dataloader
         with torch.no_grad(): 
             recommender_system.eval() 
             for data in val_dataloader: 
-               inputs, outputs = data 
-               predicted_outputs = recommender_system(inputs,outputs)
+               inputs, outputs = data
+               #print(outputs)
+               sorted,indices=torch.sort(outputs)
+               #print(sorted) 
+               mapping=mapping_labels(outputs)
+               predicted_outputs = recommender_system(inputs,sorted)
                #if epoch>3:
                    #print(predicted_outputs)
                #print(mapping_labels(outputs)) 
-               val_loss = criterion(predicted_outputs, mapping_labels(outputs) )
+               val_loss = criterion(predicted_outputs, mapping )
                #print(val_loss)
              
              # The label with the highest value will be our prediction 
@@ -60,7 +64,7 @@ def train_recommender_system(recommender_system, train_dataloader,val_dataloader
                #print(predicted_outputs) 
                running_val_loss += val_loss.item()  
                total += outputs.size(0) 
-               running_accuracy += (predicted == (mapping_labels(outputs))).sum().item()
+               running_accuracy += (predicted == (mapping)).sum().item()
         # Calculate validation loss value 
         val_loss_value = running_val_loss/len(val_dataloader) 
         print(val_loss_value)
@@ -79,11 +83,12 @@ def train_recommender_system(recommender_system, train_dataloader,val_dataloader
 
 
 """
-        this function maps our labels in the batch to integers in [0,64)]
+        this function maps our labels in the batch to integers in [0,64)
 
 """
 def mapping_labels(item_train):
     unique_labels=torch.unique(item_train)
+    #print(unique_labels)
     mapped_labels=torch.zeros(item_train.size(dim=0))
     for i in range(mapped_labels.size(dim=0)):
         mapped_labels[i]=(unique_labels==item_train[i]).nonzero(as_tuple=True)[0]
