@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-
 def train_step(recommender_system, data, epoch, criterion, train_loss_history, learning_rate):
+    print(data.head(1))
     inputs, outputs = data 
     logits = recommender_system(inputs, outputs)
     mapping = mapping_labels(outputs)
@@ -61,15 +61,15 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
         total_predictions_test=0
        
         # TRAINING
-        for i,data in train_dataloader:
-            result = train_step(recommender_system, data, epoch, criterion, train_loss_history, learning_rate)
-            train_loss_history.append(result)
-            running_train_loss += result['loss'].item()
-        train_loss_history=[]
-        train_loss_value = running_train_loss/len(train_dataloader) 
-        print('train loss: ', train_loss_value)
-        test_accuracy_value = (100 * running_test_accuracy / total_predictions_test)
-        print('test accuracy: ', test_accuracy_value)
+        # for i,data in train_dataloader:
+        #     result = train_step(recommender_system, data, epoch, criterion, train_loss_history, learning_rate)
+        #     train_loss_history.append(result)
+        #     running_train_loss += result['loss'].item()
+        # train_loss_history=[]
+        # train_loss_value = running_train_loss/len(train_dataloader) 
+        # print('train loss: ', train_loss_value)
+        # test_accuracy_value = (100 * running_test_accuracy / total_predictions_test)
+        # print('test accuracy: ', test_accuracy_value)
 
         # VALIDATION
         with torch.no_grad(): 
