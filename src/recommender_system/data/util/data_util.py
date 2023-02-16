@@ -7,15 +7,6 @@ import numpy as np
 from torch.utils.data.sampler import SubsetRandomSampler
 
 
-def split_data(train_decimal=0.6, val_decimal=0.2): 
-    data = pd.read_csv(os.path.join(os.getcwd(), 'data', 'data_files', 'transactions.csv')) 
-    train_size = int(train_decimal * len(data))
-    val_size = int(val_decimal * len(data))
-    test_size = len(data) - train_size - val_size 
-    train_data, val_data, test_data = torch.utils.data.random_split(data, [train_size, val_size, test_size])
-    return train_data, val_data, test_data
-
-
 def CustomDatasetCreator(transactions_train_data):
     transform=lambda x:customer_lookup(transactions_train_data)[0].__getitem__(x)
     target_transform=lambda y:article_lookup(transactions_train_data)[0].__getitem__(str(y))
@@ -52,18 +43,15 @@ def DataLoaderCreator(dataset,batch_size,shuffle_dataset=True,random_seed=42):
     if shuffle_dataset:
         np.random.seed(random_seed)
         np.random.shuffle(indices)
-    train_end = int(train_split * dataset_size)
-    val_end = int(val_split * dataset_size)
+    train_end = int(np.floor(train_split * dataset_size))
+    val_end = int(np.floor((train_split + val_split) * dataset_size))
     train_indices = indices[:train_end]
     val_indices=indices[train_end:val_end]
     test_indices=indices[val_end:]
     train_sampler = SubsetRandomSampler(train_indices)
     valid_sampler = SubsetRandomSampler(val_indices)
     test_sampler = SubsetRandomSampler(test_indices)
-    train_data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, 
-                                           sampler=train_sampler)
-    val_data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
-                                                sampler=valid_sampler)
-    test_data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size,
-                                                sampler=test_sampler)
+    train_data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, sampler=train_sampler)
+    val_data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, sampler=valid_sampler)
+    test_data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, sampler=test_sampler)
     return train_data_loader,val_data_loader, test_data_loader

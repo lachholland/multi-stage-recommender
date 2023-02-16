@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 
 def train_step(recommender_system, data, epoch, criterion, train_loss_history, learning_rate):
-    print(data.head(1))
     inputs, outputs = data 
     logits = recommender_system(inputs, outputs)
     mapping = mapping_labels(outputs)
@@ -22,9 +21,9 @@ def val_step(recommender_system, data, criterion, epoch, val_loss_history):
     sorted, indices=torch.sort(outputs)
     mapping = mapping_labels(outputs)
     logits = recommender_system(inputs,sorted)
-    loss = criterion(logits, mapping ).item()
+    loss = criterion(logits, mapping )
     _, predicted = torch.max(logits, 1)
-    accuracy = (predicted == (mapping)).sum().item()
+    accuracy = (predicted == (mapping)).sum()
     result = {'val_loss': loss, 'val_accuracy': accuracy, 'epoch': epoch} 
     val_loss_history.append(result)
     return result
@@ -35,9 +34,9 @@ def test_step(recommender_system, data, criterion, epoch, test_loss_history):
     sorted, indices=torch.sort(outputs)
     mapping = mapping_labels(outputs)
     logits = recommender_system(inputs,sorted)
-    loss = criterion(logits, mapping ).item()
+    loss = criterion(logits, mapping )
     _, predicted = torch.max(logits, 1)
-    accuracy = (predicted == (mapping)).sum().item()
+    accuracy = (predicted == (mapping)).sum()
     result = {'test_loss': loss, 'test_accuracy': accuracy, 'epoch': epoch}
     test_loss_history.append(result) 
     return result
@@ -61,24 +60,25 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
         total_predictions_test=0
        
         # TRAINING
-        # for i,data in train_dataloader:
-        #     result = train_step(recommender_system, data, epoch, criterion, train_loss_history, learning_rate)
-        #     train_loss_history.append(result)
-        #     running_train_loss += result['loss'].item()
-        # train_loss_history=[]
-        # train_loss_value = running_train_loss/len(train_dataloader) 
-        # print('train loss: ', train_loss_value)
-        # test_accuracy_value = (100 * running_test_accuracy / total_predictions_test)
-        # print('test accuracy: ', test_accuracy_value)
+        for i,data in train_dataloader:
+            result = train_step(recommender_system, data, epoch, criterion, train_loss_history, learning_rate)
+            train_loss_history.append(result)
+            running_train_loss += result['loss'].item()
+        train_loss_history=[]
+        train_loss_value = running_train_loss/len(train_dataloader) 
+        print('train loss: ', train_loss_value)
+        test_accuracy_value = (100 * running_test_accuracy / total_predictions_test)
+        print('test accuracy: ', test_accuracy_value)
 
         # VALIDATION
         with torch.no_grad(): 
             recommender_system.eval() 
-            for data in val_dataloader: 
-                result  = val_step(recommender_system, data, criterion, epoch, val_loss_history)
-                running_val_loss += result['val_loss']
-                running_val_accuracy += result['val_accuracy']
+            for data in val_dataloader:
+                result = val_step(recommender_system, data, criterion, epoch, val_loss_history)
+                running_val_loss += result['val_loss'].item()
+                running_val_accuracy += result['val_accuracy'].item()
                 total_predictions_val += data[1].size(0)
+        print(len(val_dataloader))
         val_loss_value = running_val_loss/len(val_dataloader) 
         print('val loss: ', val_loss_value)
         val_accuracy_value = (100 * running_val_accuracy / total_predictions_val)
@@ -93,8 +93,8 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
             recommender_system.eval()
             for data in test_dataloader:
                 result = test_step(recommender_system, data, criterion, epoch, test_loss_history)
-                running_test_loss += result['test_loss']
-                running_test_accuracy += result['test_accuracy']
+                running_test_loss += result['test_loss'].item()
+                running_test_accuracy += result['test_accuracy'].item()
                 total_predictions_test += data[1].size(0)
         test_loss_value = running_test_loss/len(test_dataloader) 
         print('test loss: ', test_loss_value)
