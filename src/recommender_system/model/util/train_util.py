@@ -60,7 +60,7 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
         total_predictions_test=0
        
         # TRAINING
-        for i,data in train_dataloader:
+        for data in train_dataloader:
             result = train_step(recommender_system, data, criterion, epoch, train_loss_history, learning_rate)
             running_train_loss += result['train_loss'].item()
             running_train_accuracy += result['train_accuracy'].item()
