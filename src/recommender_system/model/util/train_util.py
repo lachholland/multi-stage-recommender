@@ -10,11 +10,10 @@ def train_step(recommender_system, data, criterion, epoch, train_loss_history, l
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-    accuracy = (logits == (mapping)).sum().item()
+    accuracy = (logits == (mapping)).sum()
     result = {'train_loss': loss, 'train_accuracy': accuracy, 'epoch': epoch}
     train_loss_history.append(result)
     return result
-
 
 def val_step(recommender_system, data, criterion, epoch, val_loss_history):
     inputs, outputs = data
@@ -28,7 +27,6 @@ def val_step(recommender_system, data, criterion, epoch, val_loss_history):
     val_loss_history.append(result)
     return result
 
-
 def test_step(recommender_system, data, criterion, epoch, test_loss_history):
     inputs, outputs = data
     sorted, indices=torch.sort(outputs)
@@ -41,7 +39,6 @@ def test_step(recommender_system, data, criterion, epoch, test_loss_history):
     test_loss_history.append(result) 
     return result
 
-
 def train_recommender_system(recommender_system, train_dataloader, val_dataloader, test_dataloader, epochs=10):
     learning_rate = 0.0001
     train_loss_history = []
@@ -53,9 +50,12 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
         running_train_loss=0.0
         running_val_loss=0.0
         running_test_loss=0.0
+
         running_train_accuracy=0.0
         running_val_accuracy=0.0
         running_test_accuracy=0.0
+
+        total_predictions_train=0
         total_predictions_val=0
         total_predictions_test=0
        
@@ -64,10 +64,11 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
             result = train_step(recommender_system, data, criterion, epoch, train_loss_history, learning_rate)
             running_train_loss += result['train_loss'].item()
             running_train_accuracy += result['train_accuracy'].item()
+            total_predictions_train += data[1].size(0)
         train_loss_value = running_train_loss/len(train_dataloader) 
         print('train loss: ', train_loss_value)
-        test_accuracy_value = (100 * running_train_accuracy / total_predictions_test)
-        print('test accuracy: ', test_accuracy_value)
+        training_accuracy_value = (100 * running_train_accuracy / total_predictions_train)
+        print('training accuracy: ', training_accuracy_value)
 
         # VALIDATION
         with torch.no_grad(): 
@@ -98,7 +99,6 @@ def train_recommender_system(recommender_system, train_dataloader, val_dataloade
         print('test loss: ', test_loss_value)
         test_accuracy_value = (100 * running_test_accuracy / total_predictions_test)
         print('test accuracy: ', test_accuracy_value)
-
 
 # maps labels in the batch to integers in [0, batch_size])
 def mapping_labels(item_train):

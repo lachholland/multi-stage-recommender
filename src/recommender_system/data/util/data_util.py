@@ -1,11 +1,9 @@
 import torch
 from torchtext.vocab import build_vocab_from_iterator
 import pandas as pd
-import os
 from ..datasets.CustomDataset import CustomDataset
 import numpy as np
 from torch.utils.data.sampler import SubsetRandomSampler
-
 
 def CustomDatasetCreator(transactions_train_data):
     transform=lambda x:customer_lookup(transactions_train_data)[0].__getitem__(x)
@@ -15,13 +13,11 @@ def CustomDatasetCreator(transactions_train_data):
     customer_vocab_size=customer_lookup(transactions_train_data)[1]
     return [dataset,article_vocab_size,customer_vocab_size]
 
-
 def article_lookup(train_df:pd.DataFrame):
     unique_article_ids=train_df.article_id.unique() # list of unique article_ids found in training dataset
     vocab=build_vocab_from_iterator([yield_tokens(unique_article_ids)], specials=["<unk>"]) # vocab is a torchtext.vocab.Vocab object
     article_vocab_size=len(unique_article_ids)+1
     return [vocab,article_vocab_size]
-
 
 def customer_lookup(train_df:pd.DataFrame):
     unique_customer_ids=train_df.customer_id.unique() # list of unique customer_ids found in training dataset
@@ -29,11 +25,9 @@ def customer_lookup(train_df:pd.DataFrame):
     customer_vocab_size=len(unique_customer_ids)+1
     return [vocab,customer_vocab_size]
 
-
 def yield_tokens(unique_ids):
     for id in unique_ids:
         yield str(id)
-
 
 def DataLoaderCreator(dataset,batch_size,shuffle_dataset=True,random_seed=42):
     train_split=0.6
