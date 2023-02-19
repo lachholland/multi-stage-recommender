@@ -12,11 +12,9 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## Multi-stage Recommendation System
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Multi-stage Recommendation System 
 
 A multi-stage recommendation system built with Pytorch. Trained on transaction data from the 
 
