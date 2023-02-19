@@ -1,10 +1,8 @@
 <!-- TITLE -->
 <h1>Multi-stage Recommendation System</h1>
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 <!-- TITLE -->
-A multi-stage recommendation system built with Pytorch. Data sourced from the H&M Personalized Fashion Recommendations Kaggle competition.
+A multi-stage recommendation system built with PyTorch. Trained on data sourced from the H&M Personalized Fashion Recommendations Kaggle competition.
 
 
 <!-- GETTING STARTED -->
