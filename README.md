@@ -10,7 +10,6 @@ A multi-stage recommendation system built with PyTorch. Trained on data sourced 
 
 ### Installation
 
-   ```
 1. Run the makefile in the project root
    ```sh
    make
