@@ -28,7 +28,7 @@ A multi-stage recommendation system built with PyTorch. Trained on data sourced 
 ## toDos
 
 - Add negative sampling
-- Improve performance
+- Reduce loss further
 - Add more user and item features
 - Image recognition
 
