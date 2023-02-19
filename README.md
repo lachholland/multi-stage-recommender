@@ -1,22 +1,10 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a name="readme-top"></a>
-
-<br />
-<div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Multi-stage Recommendation System</h3>
-</div>
-
-
-<!-- ABOUT THE PROJECT -->
+<!-- TITLE -->
 <h1>Multi-stage Recommendation System</h1>
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-A multi-stage recommendation system built with Pytorch. Trained on transaction data from the 
+<!-- TITLE -->
+A multi-stage recommendation system built with Pytorch. Data sourced from the H&M Personalized Fashion Recommendations Kaggle competition.
 
 
 <!-- GETTING STARTED -->
