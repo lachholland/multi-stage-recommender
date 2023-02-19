@@ -22,9 +22,7 @@ A multi-stage recommendation system built with PyTorch. Trained on data sourced 
    ```sh
    python -m main
    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+   
 
 <!-- ROADMAP -->
 ## toDos
@@ -33,8 +31,6 @@ A multi-stage recommendation system built with PyTorch. Trained on data sourced 
 - Reduce loss
 - Add more user and item features
 - Image recognition
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- ACKNOWLEDGMENTS -->
