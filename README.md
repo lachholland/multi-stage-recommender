@@ -28,6 +28,6 @@ A multi-stage recommendation system built using PyTorch trained on data sourced 
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-Model training data sourced from the [H&M Personalized Fashion Recommendations](https://www.kaggle.com/c/h-and-m-personalized-fashion-recommendations) Kaggle competition.
+Model training data sourced from the [H&M Personalized Fashion Recommendations Kaggle competition](https://www.kaggle.com/c/h-and-m-personalized-fashion-recommendations).
 Inspired by the blog post [Building a Multi-Stage Recommendation System (Part 1.1)](https://medium.com/mlearning-ai/building-a-multi-stage-recommendation-system-part-1-1-95961ccf3dd8) by Adrien Biarnes.
 
