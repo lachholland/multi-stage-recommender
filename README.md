@@ -3,7 +3,7 @@
 A multi-stage recommendation system built using PyTorch trained on data sourced from the H&M Personalized Fashion Recommendations Kaggle competition.
 
 
-### Installation
+### How to run
 
 1. Activate the python virtual environment. From the project root folder, run the terminal command:
    ```sh
