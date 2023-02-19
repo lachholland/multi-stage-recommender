@@ -5,11 +5,15 @@ A multi-stage recommendation system built using PyTorch trained on data sourced 
 
 ### Installation
 
-1. Run the makefile in the project root
+1. Activate the python virtual environment. From the project root folder, run the terminal command:
+   ```sh
+   . venv/bin/activate
+   ```
+2. Run the Makefile. From the project root folder, run the terminal command:
    ```sh
    make
    ```
-2. Train the model by running the following command in the /src folder
+3. Train the model. From the /src folder run the terminal command:
    ```sh
    python -m main
    ```
