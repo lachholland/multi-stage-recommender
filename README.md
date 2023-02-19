@@ -9,7 +9,7 @@ A multi-stage recommendation system built using PyTorch trained on data sourced 
    ```sh
    . venv/bin/activate
    ```
-2. Run the makefile. From the project root folder, run the terminal command:
+2. Install project dependencies by running the makefile. From the project root folder, run the terminal command:
    ```sh
    make
    ```
