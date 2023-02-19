@@ -7,7 +7,7 @@ A multi-stage recommendation system built using PyTorch trained on data sourced 
 
 1. Activate the python virtual environment. From the project root folder, run the terminal command:
    ```sh
-   . venv/bin/activate
+   venv/bin/activate
    ```
 2. Install project dependencies by running the makefile. From the project root folder, run the terminal command:
    ```sh
