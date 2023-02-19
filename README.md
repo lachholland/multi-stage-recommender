@@ -1,5 +1,5 @@
 <!-- TITLE -->
-<h1>Multi-stage Recommendation System</h1>
+<h1>Multi-Stage Recommendation System</h1>
 
 <!-- TITLE -->
 A multi-stage recommendation system built with PyTorch. Trained on data sourced from the H&M Personalized Fashion Recommendations Kaggle competition.
