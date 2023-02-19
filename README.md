@@ -29,8 +29,7 @@ A multi-stage recommendation system built with PyTorch. Trained on data sourced 
 
 - Add negative sampling
 - Add hyperparameters
-- Add more user and item features
-- Image recognition
+- Add additional user and item features
 
 
 <!-- ACKNOWLEDGMENTS -->
