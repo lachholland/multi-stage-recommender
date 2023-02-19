@@ -12,7 +12,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## Multi-stage Recommendation System
+<h1>Multi-stage Recommendation System</h1>
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
