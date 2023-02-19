@@ -10,15 +10,12 @@ A multi-stage recommendation system built with PyTorch. Trained on data sourced 
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/lachholland/multi-stage-recommender.git
    ```
-3. Run the makefile in the project root
+1. Run the makefile in the project root
    ```sh
    make
    ```
-4. Train the model by running the following command in the /src folder
+2. Train the model by running the following command in the /src folder
    ```sh
    python -m main
    ```
