@@ -29,7 +29,7 @@ def validate_recommender_system(recommender_system, val_dataloader, epochs=10):
                 total_predictions_val += data[1].size(0)
             val_loss = running_val_loss/len(val_dataloader) 
             val_accuracy = (100 * running_val_accuracy / total_predictions_val)
-            print(f'epoch: {epoch}, test loss: {val_loss}, test accuracy: {val_accuracy}')
+            print(f'epoch: {epoch}, validation loss: {val_loss}, validation accuracy: {val_accuracy}')
             if val_accuracy > best_val_accuracy: 
                 torch.save(recommender_system.state_dict(), 'recommender_val.pt') 
             best_val_accuracy = val_accuracy 
